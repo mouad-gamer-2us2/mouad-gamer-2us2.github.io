@@ -10,7 +10,7 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/mouad-jaalouti-89730b287/",
   github: "https://github.com/mouad-gamer-2us2",
   photo: "images/mouad-jaalouti.webp",
-  photoAlternative: "images/mouad-jaalouti-cyber.webp",
+  photoAlternative: "images/mouad-jaalouti-cyber-dark.webp",
   cv: "cv/mouad-jaalouti-cv.pdf",
   intro:
     "De la protection des infrastructures au développement web sécurisé, je construis mon parcours à la croisée du code, des systèmes et de la cybersécurité.",
