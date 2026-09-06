@@ -1,0 +1,247 @@
+.hero-scene {
+  position: relative;
+  height: calc(100svh - 89px);
+  min-height: 520px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #d4d5d7;
+  color: #101923;
+}
+.portrait-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: #d4d5d7;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+.portrait-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.portrait-fallback {
+  position: absolute;
+  left: 50%;
+  top: -16%;
+  transform: translateX(-50%);
+  height: 162%;
+  max-width: none;
+  width: auto;
+}
+.portrait-stage:focus-visible {
+  outline: 4px solid #087c5f;
+  outline-offset: -8px;
+}
+.scene-name {
+  position: absolute;
+  left: 4%;
+  bottom: 8%;
+  pointer-events: none;
+  padding: 18px 22px;
+  background: #0b111be8;
+  color: var(--text);
+  border-left: 3px solid var(--accent);
+}
+.scene-name p {
+  color: var(--accent);
+  font: 10px var(--mono);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.scene-name h1 {
+  font-size: clamp(32px, 4.4vw, 66px);
+  letter-spacing: -2px;
+  line-height: 0.95;
+  font-weight: 650;
+}
+.scene-name h1 span {
+  display: block;
+}
+.scene-name small {
+  display: block;
+  margin-top: 16px;
+  max-width: 220px;
+  font-size: 12px;
+}
+.scene-index {
+  position: absolute;
+  top: 26px;
+  left: 4%;
+  font: 10px var(--mono);
+  letter-spacing: 2px;
+  pointer-events: none;
+  color: #182831;
+}
+.scene-interaction {
+  position: absolute;
+  top: 24px;
+  right: 4%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #0b111bef;
+  color: #e4f1ed;
+  padding: 10px 14px;
+  border-radius: 4px;
+  pointer-events: none;
+  font: 10px/1.5 var(--mono);
+}
+.scene-scroll {
+  position: absolute;
+  bottom: 8%;
+  right: 4%;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  border: 1px solid #7be0bd77;
+  background: #0b111bf2;
+  color: #edf2f7;
+  font: 11px var(--mono);
+}
+.scene-scroll svg {
+  color: var(--accent);
+}
+.hero-introduction {
+  padding-block: 72px 54px;
+}
+.intro-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.intro-heading {
+  font-size: clamp(30px, 3.5vw, 48px);
+  line-height: 1.16;
+  letter-spacing: -1.4px;
+  margin: 20px 0;
+}
+.intro-heading span {
+  color: var(--accent);
+}
+.hero-introduction .hero-description {
+  max-width: 600px;
+}
+.hero-introduction .social-links {
+  margin-top: 24px;
+}
+.hero-introduction .hero-bottom {
+  margin-top: 48px;
+}
+@media (max-width: 900px) {
+  .hero-scene {
+    height: calc(100svh - 73px);
+  }
+  .intro-layout {
+    gap: 30px;
+  }
+  .scene-name {
+    bottom: 12%;
+  }
+  .scene-scroll {
+    bottom: 3%;
+  }
+}
+@media (max-width: 600px) {
+  .hero-scene {
+    min-height: 480px;
+  }
+  .scene-index {
+    top: 20px;
+    font-size: 8px;
+  }
+  .scene-interaction {
+    top: 46px;
+    left: 4%;
+    right: auto;
+    padding: 8px 10px;
+    font-size: 8px;
+  }
+  .scene-name {
+    left: 5%;
+    bottom: 13%;
+    padding: 13px 16px;
+  }
+  .scene-name h1 {
+    font-size: 38px;
+  }
+  .scene-name p {
+    font-size: 8px;
+    margin-bottom: 8px;
+  }
+  .scene-name small {
+    font-size: 10px;
+    max-width: 170px;
+    margin-top: 10px;
+  }
+  .scene-scroll {
+    bottom: 3%;
+    right: 5%;
+    padding: 11px 14px;
+    font-size: 10px;
+  }
+  .intro-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .hero-introduction {
+    padding-block: 48px 32px;
+  }
+  .hero-introduction .hero-bottom {
+    margin-top: 32px;
+  }
+  .portrait-fallback {
+    height: 142%;
+    top: -12%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-stage {
+    cursor: pointer;
+  }
+}
+.portrait-stage canvas {
+  opacity: 0;
+}
+.portrait-stage[data-fallback="true"] canvas {
+  display: none;
+}
+.alternative-fallback {
+  opacity: 0;
+}
+.portrait-stage[data-pinned="true"] .alternative-fallback {
+  opacity: 1;
+}
+@media (hover: hover) {
+  .portrait-stage[data-fallback="true"]:hover .alternative-fallback {
+    opacity: 1;
+  }
+}
+.scene-auto-toggle {
+  position: absolute;
+  top: 78px;
+  right: 4%;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 9px 12px;
+  background: #0b111be8;
+  color: #edf2f7;
+  font: 10px var(--mono);
+  border: 1px solid #526663;
+  border-radius: 4px;
+}
+@media (max-width: 600px) {
+  .scene-auto-toggle {
+    top: 85px;
+    left: 4%;
+    right: auto;
+    font-size: 8px;
+    padding: 8px 10px;
+  }
+}
