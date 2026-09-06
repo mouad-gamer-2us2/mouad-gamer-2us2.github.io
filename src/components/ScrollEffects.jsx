@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /** Native scrolling: no wheel interception or scroll-position manipulation. */
 export function useHeroScroll(ref) {
+  const [small, setSmall] = useState(false);
   useEffect(() => {
     const element = ref.current;
     const query = matchMedia("(prefers-reduced-motion: reduce)");
@@ -22,6 +23,9 @@ export function useHeroScroll(ref) {
             ),
           );
       element.style.setProperty("--hero-progress", progress);
+      element.style.setProperty("--hero-shrink", Math.min(1, progress / 0.72));
+      element.dataset.compact = progress > 0.25 ? "true" : "false";
+      setSmall(progress >= 0.72);
     }
     function schedule() {
       if (!frame) frame = requestAnimationFrame(update);
@@ -37,6 +41,7 @@ export function useHeroScroll(ref) {
       query.removeEventListener("change", schedule);
     };
   }, [ref]);
+  return small;
 }
 
 export default function ScrollEffects() {
@@ -44,10 +49,15 @@ export default function ScrollEffects() {
     const query = matchMedia("(prefers-reduced-motion: reduce)");
     let observer;
     const selector =
-      ".section-heading, .intro-layout, .timeline-item, .skill-card, .project-card, .certificate-card";
+      ".section-heading, .intro-layout, .timeline-item, .skill-card, .project-card, .certificate-card, .contact-panel";
     function register() {
       document.querySelectorAll(selector).forEach((element) => {
         if (element.dataset.scrollReveal) return;
+        const siblings = [...element.parentElement.children];
+        element.style.setProperty(
+          "--reveal-delay",
+          `${Math.max(0, siblings.indexOf(element) % 3) * 70}ms`,
+        );
         element.dataset.scrollReveal = "pending";
         observer.observe(element);
       });

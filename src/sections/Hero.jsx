@@ -5,6 +5,7 @@ import { projects } from "../data/projects";
 import { CvLink, SocialLinks, asset } from "../components/UI";
 import PortraitReveal from "../components/PortraitReveal";
 import "../styles/hero.css";
+import { quote } from "../data/quote";
 import { useHeroScroll } from "../components/ScrollEffects";
 
 function TypedRole() {
@@ -57,8 +58,9 @@ function TypedRole() {
 }
 
 export default function Hero() {
+  const [quotePaused, setQuotePaused] = useState(false);
   const scrollScene = useRef(null);
-  useHeroScroll(scrollScene);
+  const smallPortrait = useHeroScroll(scrollScene);
   return (
     <>
       <section
@@ -68,8 +70,24 @@ export default function Hero() {
         aria-labelledby="hero-title"
       >
         <div className="hero-pin">
+          <div className="hero-message" aria-hidden="true">
+            UNE CONVICTION / MOUAD JAALOUTI
+          </div>
+          <div
+            className="quote-marquee"
+            data-paused={quotePaused}
+            aria-hidden="true"
+          >
+            {quote.lines.map((line, index) => (
+              <div className={`quote-track quote-track-${index}`} key={line}>
+                {Array.from({ length: 4 }, (_, repeat) => (
+                  <span key={repeat}>{line}&nbsp;</span>
+                ))}
+              </div>
+            ))}
+          </div>
           <div className="hero-scene">
-            <PortraitReveal />
+            <PortraitReveal suspended={smallPortrait} />
             <span className="scene-index" aria-hidden="true">
               MJ / PORTFOLIO PERSONNEL
             </span>
@@ -109,6 +127,27 @@ export default function Hero() {
             </div>
             <span>MOUAD JAALOUTI</span>
           </div>
+          <blockquote className="hero-quote-credit">
+            <p className="sr-only" lang="en">
+              {quote.original}
+            </p>
+            <cite>
+              <a href={quote.source} target="_blank" rel="noopener noreferrer">
+                {quote.author} · <span lang="en">The Process of Security</span>
+              </a>
+            </cite>
+            <small>Traduction française</small>
+            <button
+              className="quote-pause"
+              type="button"
+              aria-pressed={quotePaused}
+              onClick={() => setQuotePaused(!quotePaused)}
+            >
+              {quotePaused
+                ? "Animer la citation"
+                : "Mettre la citation en pause"}
+            </button>
+          </blockquote>
         </div>
       </section>
       <section

@@ -5,7 +5,7 @@ import { asset } from "./UI";
 import { createPortraitRenderer } from "./portraitRenderer";
 
 /** Local organic reveal with keyboard/touch controls and a non-WebGL fallback. */
-export default function PortraitReveal() {
+export default function PortraitReveal({ suspended = false }) {
   const canvasRef = useRef(null);
   const engine = useRef({
     x: 0.5,
@@ -34,9 +34,15 @@ export default function PortraitReveal() {
     };
     return () => renderer.dispose();
   }, []);
+  useEffect(() => {
+    engine.current.suspended = suspended;
+    engine.current.active = false;
+    engine.current.lastInput = performance.now();
+    engine.current.draw();
+  }, [suspended]);
   function move(event) {
     const state = engine.current;
-    if (event.pointerType === "touch" || state.pinned) return;
+    if (suspended || event.pointerType === "touch" || state.pinned) return;
     state.lastInput = performance.now();
     const bounds = event.currentTarget.getBoundingClientRect();
     state.x = (event.clientX - bounds.left) / bounds.width;
@@ -65,6 +71,7 @@ export default function PortraitReveal() {
     <>
       <button
         type="button"
+        disabled={suspended}
         className="portrait-stage"
         data-fallback={fallback}
         data-pinned={pinned}
@@ -111,7 +118,7 @@ export default function PortraitReveal() {
         )}
         <canvas ref={canvasRef} aria-hidden="true" />
       </button>
-      {!fallback && (
+      {!fallback && !suspended && (
         <button
           type="button"
           className="scene-auto-toggle"

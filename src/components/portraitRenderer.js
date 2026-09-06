@@ -174,7 +174,17 @@ export function createPortraitRenderer(canvas, sources, onUnavailable) {
   function render(time) {
     frame = 0;
     if (disposed || ready < 2 || !visible || document.hidden) return;
-    const automatic = !state.paused && !state.pinned && !motion.matches;
+    // Resizing clears WebGL's buffer: resize and redraw in the same frame.
+    const ratio = Math.min(devicePixelRatio || 1, 2);
+    const width = Math.max(1, Math.round(canvas.clientWidth * ratio));
+    const height = Math.max(1, Math.round(canvas.clientHeight * ratio));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+      gl.viewport(0, 0, width, height);
+    }
+    const automatic =
+      !state.suspended && !state.paused && !state.pinned && !motion.matches;
     const idle = automatic && time - state.lastInput >= 1500;
     const destinationX = idle
       ? 0.5 +
@@ -189,7 +199,8 @@ export function createPortraitRenderer(canvas, sources, onUnavailable) {
       : state.paused
         ? "paused"
         : "interactive";
-    const target = idle || state.active || state.pinned ? 1 : 0;
+    const target =
+      !state.suspended && (idle || state.active || state.pinned) ? 1 : 0;
     const elapsed = Math.min(time - previous || 16, 40);
     previous = time;
     const animateBackground = !state.paused && !motion.matches;
@@ -232,10 +243,6 @@ export function createPortraitRenderer(canvas, sources, onUnavailable) {
       );
   }
   function resize() {
-    const ratio = Math.min(devicePixelRatio || 1, 2);
-    canvas.width = Math.round(canvas.clientWidth * ratio);
-    canvas.height = Math.round(canvas.clientHeight * ratio);
-    gl.viewport(0, 0, canvas.width, canvas.height);
     schedule();
   }
   const observer = new ResizeObserver(resize);
