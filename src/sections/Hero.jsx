@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import { profile, experiences } from "../data/profile";
 import { projects } from "../data/projects";
-import { CvLink, SocialLinks } from "../components/UI";
+import { CvLink, SocialLinks, asset } from "../components/UI";
 import PortraitReveal from "../components/PortraitReveal";
 import "../styles/hero.css";
+import { useHeroScroll } from "../components/ScrollEffects";
 
 function TypedRole() {
   const [text, setText] = useState(profile.roles[0]);
@@ -56,24 +57,59 @@ function TypedRole() {
 }
 
 export default function Hero() {
+  const scrollScene = useRef(null);
+  useHeroScroll(scrollScene);
   return (
     <>
-      <section id="accueil" className="hero-scene" aria-labelledby="hero-title">
-        <PortraitReveal />
-        <span className="scene-index" aria-hidden="true">
-          MJ / PORTFOLIO PERSONNEL
-        </span>
-        <div className="scene-name">
-          <p>CODE · SYSTÈMES · CYBERSÉCURITÉ</p>
-          <h1 id="hero-title">
-            {profile.firstName}
-            <span>{profile.lastName}</span>
-          </h1>
-          <small>{profile.title}</small>
+      <section
+        ref={scrollScene}
+        id="accueil"
+        className="hero-scroll-shell"
+        aria-labelledby="hero-title"
+      >
+        <div className="hero-pin">
+          <div className="hero-scene">
+            <PortraitReveal />
+            <span className="scene-index" aria-hidden="true">
+              MJ / PORTFOLIO PERSONNEL
+            </span>
+            <div className="scene-name">
+              <p>CODE · SYSTÈMES · CYBERSÉCURITÉ</p>
+              <h1 id="hero-title">
+                {profile.firstName}
+                <span>{profile.lastName}</span>
+              </h1>
+              <small>{profile.title}</small>
+            </div>
+            <a className="scene-scroll" href="#presentation">
+              Explorer mon portfolio <ArrowDown size={20} aria-hidden="true" />
+            </a>
+          </div>
+          <div className="hero-signature" aria-hidden="true">
+            <div className="signature-crop">
+              <svg viewBox="0 205 1000 360" aria-hidden="true">
+                <defs>
+                  <filter id="signature-ink" colorInterpolationFilters="sRGB">
+                    <feColorMatrix
+                      type="matrix"
+                      values="0 0 0 0 0.48  0 0 0 0 0.88  0 0 0 0 0.74  -0.2126 -0.7152 -0.0722 0 1"
+                    />
+                    <feComponentTransfer>
+                      <feFuncA type="linear" slope="1.4" intercept="-0.1" />
+                    </feComponentTransfer>
+                  </filter>
+                </defs>
+                <image
+                  href={asset(profile.signature)}
+                  width="1000"
+                  height="750"
+                  filter="url(#signature-ink)"
+                />
+              </svg>
+            </div>
+            <span>MOUAD JAALOUTI</span>
+          </div>
         </div>
-        <a className="scene-scroll" href="#presentation">
-          Explorer mon portfolio <ArrowDown size={20} aria-hidden="true" />
-        </a>
       </section>
       <section
         id="presentation"

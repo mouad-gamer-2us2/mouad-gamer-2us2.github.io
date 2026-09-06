@@ -245,3 +245,122 @@
     padding: 8px 10px;
   }
 }
+/* A native sticky chapter: portrait recedes and reveals the personal signature. */
+.hero-scroll-shell {
+  --hero-progress: 0;
+  --header-height: 89px;
+  height: calc(165svh - var(--header-height));
+  position: relative;
+  background: var(--bg);
+}
+.hero-pin {
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100svh - var(--header-height));
+  min-height: 520px;
+}
+.hero-pin .hero-scene {
+  height: 100%;
+  min-height: 0;
+  transform: scale(calc(1 - var(--hero-progress) * 0.23));
+  transform-origin: center 14%;
+  border-radius: calc(var(--hero-progress) * 36px);
+  box-shadow: 0 25px 70px #0004;
+  will-change: transform;
+}
+.hero-signature {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  width: clamp(280px, 38vw, 480px);
+  transform: translateX(-50%)
+    translateY(calc((1 - var(--hero-progress)) * 25px));
+  opacity: clamp(0, calc((var(--hero-progress) - 0.28) * 1.7), 1);
+  pointer-events: none;
+  text-align: center;
+}
+.signature-crop {
+  aspect-ratio: 2.7;
+  overflow: hidden;
+  clip-path: inset(0 calc((1 - var(--hero-progress)) * 100%) 0 0);
+}
+.signature-crop svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.hero-signature span {
+  display: block;
+  margin-top: 8px;
+  font: 9px var(--mono);
+  letter-spacing: 3px;
+  color: var(--accent);
+}
+[data-scroll-reveal] {
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+[data-scroll-reveal="pending"] {
+  opacity: 0.25;
+  transform: translateY(26px);
+}
+[data-scroll-reveal="visible"],
+[data-scroll-reveal]:focus-within {
+  opacity: 1;
+  transform: none;
+}
+@media (max-width: 900px) {
+  .hero-scroll-shell {
+    --header-height: 73px;
+  }
+}
+@media (max-width: 600px) {
+  .hero-scroll-shell {
+    height: calc(150svh - var(--header-height));
+  }
+  .hero-pin {
+    min-height: 480px;
+  }
+  .hero-pin .hero-scene {
+    transform: scale(calc(1 - var(--hero-progress) * 0.19));
+  }
+  .hero-signature {
+    width: min(78vw, 310px);
+    bottom: 1%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-shell {
+    height: auto;
+  }
+  .hero-pin {
+    position: relative;
+    top: 0;
+    height: auto;
+    min-height: 0;
+  }
+  .hero-pin .hero-scene {
+    height: calc(100svh - var(--header-height));
+    min-height: 480px;
+    transform: none;
+    border-radius: 0;
+    will-change: auto;
+  }
+  .hero-signature {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    margin: 24px auto;
+    transform: none;
+    opacity: 1;
+  }
+  .signature-crop {
+    clip-path: none;
+  }
+  [data-scroll-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -155,3 +155,7 @@ git push origin main
 Ne pas utiliser de push forcé pour contourner un historique existant. `npm ci` et `npm run build` doivent réussir depuis le clone avant le push.
 
 Voir `CONTENT_CHECKLIST.md` pour les éléments restant à préciser et la traçabilité du CV.
+
+## Défilement et signature
+
+Le hero se réduit progressivement lors du défilement natif, puis la signature apparaît en grand. `profile.signature` indique l’image locale ; un filtre SVG rend le papier transparent et colore l’encre avec l’accent du site. Aucun fichier de la référence n’est réutilisé. `src/components/ScrollEffects.jsx` pilote la progression et l’entrée des sections/cartes. Les styles sont dans `src/styles/hero.css`. La préférence de réduction des mouvements désactive ces transitions et affiche la signature sans animation.

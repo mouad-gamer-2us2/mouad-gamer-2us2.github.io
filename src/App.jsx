@@ -1,3 +1,4 @@
+import ScrollEffects from "./components/ScrollEffects";
 import Navigation from "./components/Navigation";
 import Hero from "./sections/Hero";
 import About from "./sections/About";
@@ -46,6 +47,7 @@ export default function App() {
         <Certifications />
         <Contact />
       </main>
+      <ScrollEffects />
     </>
   );
 }
