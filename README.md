@@ -32,7 +32,7 @@ Le dossier `dist/` contient tous les fichiers à publier. Il est généré et ne
 | Fichier | Contenu |
 | --- | --- |
 | `src/data/profile.js` | Identité, coordonnées, biographie, langues, formations, stages, compétences, événements et certifications |
-| `src/data/projects.js` | Sept projets : objectif, actions, technologies, résultat, image et liens |
+| `src/data/projects.js` | Dix projets (dont trois en stage) : objectif, actions, technologies, résultat, image et liens |
 | `src/data/site.js` | Nom du dépôt, utilisateur GitHub, domaine éventuel, titre et description SEO |
 | `src/styles/index.css` | Palette, typographie, composants et règles responsive |
 | `src/components/ProjectVisual.jsx` | Schémas illustratifs originaux des projets |

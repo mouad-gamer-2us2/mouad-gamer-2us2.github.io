@@ -1,5 +1,7 @@
-// Source : CV, page 2. Aucun lien, résultat chiffré ou visuel de produit n’est inventé.
-export const projects = [
+import { experiences } from "./profile";
+
+// Source : CV, pages 1 et 2. Aucun résultat ou lien non attesté n’est ajouté.
+const academicProjects = [
   {
     id: "infrastructure",
     title: "Sécurisation d’une infrastructure réseau",
@@ -138,6 +140,62 @@ export const projects = [
     ],
     stack: ["CentOS 8", "Samba", "SELinux", "firewalld", "Windows 11"],
   },
+];
+
+// Un projet par stage : les missions, dates et technologies restent centralisées.
+const internshipProjects = [
+  {
+    id: "bmci-stage",
+    organization: "BMCI · Groupe BNP Paribas",
+    title: "Infrastructure sécurisée, SOC et automatisation",
+    category: "Cybersécurité",
+    visual: "securityOps",
+    summary:
+      "Segmentation réseau, gestion des identités, automatisation et supervision de sécurité au cours d’un stage transversal.",
+    objective:
+      "Mettre en pratique la sécurité des infrastructures, l’automatisation et la supervision.",
+  },
+  {
+    id: "tool-stage",
+    organization: "TOOL Consulting",
+    title: "Site vitrine de TOOL Consulting",
+    category: "Développement",
+    visual: "website",
+    summary:
+      "Un site WordPress responsive pour présenter les services de l’entreprise et faciliter la prise de contact.",
+    objective:
+      "Développer le site officiel et soigner son architecture, son interface et l’expérience utilisateur.",
+  },
+  {
+    id: "onee-stage",
+    organization: "ONEE · Branche Électricité",
+    title: "Gestion des réclamations et des rendez-vous",
+    category: "Développement",
+    visual: "requests",
+    summary:
+      "Une plateforme Laravel avec gestion des rôles, suivi des demandes, messagerie et tableaux de bord.",
+    objective:
+      "Gérer les réclamations et les rendez-vous avec trois profils utilisateurs et un suivi des demandes.",
+  },
+].map((project) => {
+  const experience = experiences.find(
+    (item) => item.organization === project.organization,
+  );
+  return {
+    ...project,
+    origin: "stage",
+    date: experience.date,
+    location: experience.location,
+    actions: experience.bullets,
+    stack: experience.tags,
+    github: experience.link || null,
+  };
+});
+
+export const projects = [
+  academicProjects[0],
+  ...internshipProjects,
+  ...academicProjects.slice(1),
 ].map((project) => ({
   result: null,
   image: null,

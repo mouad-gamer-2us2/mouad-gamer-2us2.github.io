@@ -62,6 +62,12 @@ function ProjectDialog({ project, onClose }) {
         <div className="eyebrow">
           {project.category} / {project.date}
         </div>
+        {project.origin === "stage" && (
+          <p className="project-context">
+            Stage · {project.organization}
+            {project.location && ` · ${project.location}`}
+          </p>
+        )}
         <h2 id="dialog-title">{project.title}</h2>
         {project.subtitle && <p>{project.subtitle}</p>}
         <ProjectVisual type={project.visual} />
@@ -106,15 +112,23 @@ function ProjectDialog({ project, onClose }) {
   );
 }
 
+function matchesFilter(project, filter) {
+  return (
+    filter === "Tous" ||
+    (filter === "En stage"
+      ? project.origin === "stage"
+      : project.category === filter)
+  );
+}
+
 export default function Projects() {
   const [filter, setFilter] = useState("Tous");
   const [selected, setSelected] = useState(null);
   const trigger = useRef(null);
-  const filtered = projects.filter(
-    (project) => filter === "Tous" || project.category === filter,
-  );
+  const filtered = projects.filter((project) => matchesFilter(project, filter));
   const filters = [
     "Tous",
+    "En stage",
     "Cybersécurité",
     "Développement",
     "Systèmes & réseaux",
@@ -136,7 +150,7 @@ export default function Projects() {
               <span className="muted-title">à la pratique.</span>
             </>
           }
-          description="Une sélection de mes travaux académiques et personnels, entre sécurité des infrastructures et développement applicatif."
+          description="Des réalisations en stage et des projets académiques et personnels, entre sécurité des infrastructures et développement applicatif."
         />
         <span className="project-total">
           {String(projects.length).padStart(2, "0")}
@@ -158,7 +172,7 @@ export default function Projects() {
             <span>
               {category === "Tous"
                 ? projects.length
-                : projects.filter((p) => p.category === category).length}
+                : projects.filter((p) => matchesFilter(p, category)).length}
             </span>
           </button>
         ))}
@@ -187,6 +201,11 @@ export default function Projects() {
                 <span>{project.category}</span>
                 <span>{project.date}</span>
               </div>
+              {project.origin === "stage" && (
+                <p className="project-context">
+                  Stage · {project.organization}
+                </p>
+              )}
               {project.featured && (
                 <p className="feature-label">
                   <span />

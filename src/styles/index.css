@@ -1769,3 +1769,8 @@ dd > span {
     transform: none;
   }
 }
+.project-context {
+  color: var(--accent);
+  font: 500 10px/1.8 var(--mono);
+  margin: 10px 0 12px;
+}

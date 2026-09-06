@@ -12,8 +12,30 @@ import {
   HeartPulse,
   Fingerprint,
   ArrowRight,
+  Globe,
+  Mail,
+  LayoutDashboard,
+  MessageSquare,
 } from "lucide-react";
 const visualSets = {
+  securityOps: {
+    icons: [Server, ShieldCheck, LayoutDashboard],
+    labels: ["VLAN", "SOC", "SUPERVISION"],
+    caption: "INFRASTRUCTURE / SÉCURITÉ",
+    code: "08",
+  },
+  website: {
+    icons: [Globe, Laptop, Mail],
+    labels: ["SERVICES", "RESPONSIVE", "CONTACT"],
+    caption: "WORDPRESS / SITE VITRINE",
+    code: "09",
+  },
+  requests: {
+    icons: [MessageSquare, CalendarCheck, LayoutDashboard],
+    labels: ["DEMANDES", "RENDEZ-VOUS", "SUIVI"],
+    caption: "LARAVEL / RÉCLAMATIONS",
+    code: "10",
+  },
   network: {
     icons: [Laptop, ShieldCheck, Server],
     labels: ["VPN", "PARE-FEU", "RÉSEAU"],

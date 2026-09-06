@@ -112,9 +112,9 @@ export default function Hero() {
             <div>
               <strong>{String(projects.length).padStart(2, "0")}</strong>
               <span>
-                projets académiques
+                projets en stage
                 <br />
-                et personnels
+                et hors stage
               </span>
             </div>
             <div>
