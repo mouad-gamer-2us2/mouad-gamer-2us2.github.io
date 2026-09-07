@@ -270,6 +270,7 @@
   background: radial-gradient(ellipse at center, #172b2a, #0b141b 75%);
 }
 .hero-pin::before {
+  animation: hero-contour-drift 28s ease-in-out infinite alternate;
   content: "";
   position: absolute;
   inset: -35%;
@@ -282,6 +283,14 @@
   );
   transform: rotate(calc(-16deg + var(--hero-progress) * 8deg));
   pointer-events: none;
+}
+@keyframes hero-contour-drift {
+  from {
+    background-position: -30px 0;
+  }
+  to {
+    background-position: 60px 50px;
+  }
 }
 .hero-pin .hero-scene {
   position: absolute;
@@ -384,6 +393,7 @@
   font: 10px var(--mono);
 }
 .hero-quote-credit {
+  pointer-events: none;
   position: absolute;
   bottom: 5%;
   left: 5%;
@@ -392,6 +402,9 @@
   text-align: center;
   opacity: clamp(0, calc((var(--hero-progress) - 0.3) * 2), 1);
   z-index: 4;
+}
+.hero-quote-credit:not([inert]) :is(a, button) {
+  pointer-events: auto;
 }
 .hero-quote-credit cite {
   font: 11px var(--mono);

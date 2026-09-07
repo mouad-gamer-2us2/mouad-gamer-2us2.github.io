@@ -1,6 +1,7 @@
 import ScrollEffects from "./components/ScrollEffects";
 import Navigation from "./components/Navigation";
 import Hero from "./sections/Hero";
+import Journey from "./sections/Journey";
 import About from "./sections/About";
 import Timeline from "./sections/Timeline";
 import Skills from "./sections/Skills";
@@ -17,7 +18,9 @@ export default function App() {
       </a>
       <Navigation />
       <main id="main" tabIndex={-1}>
-        <Hero />
+        <Hero>
+          <Journey />
+        </Hero>
         <About />
         <Timeline
           id="parcours"

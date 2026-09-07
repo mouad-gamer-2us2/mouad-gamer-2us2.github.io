@@ -158,6 +158,8 @@ Voir `CONTENT_CHECKLIST.md` pour les éléments restant à préciser et la traç
 
 ## Défilement et signature
 
+Les sections `#moments` et `#facettes` sont configurées dans `src/data/journey.js`. Pour chaque événement, renseigner `image` (chemin relatif à `public/`) et `alt`. Sans photo, un visuel graphique est affiché. Remplacer `facets.cyberImage` et `facets.normalImage` par les futurs portraits de profil. Le texte expliquant le choix personnel de la cybersécurité reste à fournir : aucun motif autobiographique n’a été inventé. La galerie utilise le scroll natif avec une scène sticky réversible ; sur mobile et avec réduction des mouvements, elle devient verticale.
+
 La citation se configure dans `src/data/quote.js` avec son attribution et sa source. Ses deux lignes défilent en boucle dans des directions opposées, indépendamment du scroll ; un bouton permet de les mettre en pause. La préférence de réduction des mouvements affiche le texte fixe. Les titres apparaissent progressivement, les cartes entrent avec un léger décalage et les étapes du parcours glissent latéralement. Le redimensionnement du canvas et son rendu sont synchronisés pour éviter une image noire pendant la réduction du portrait.
 
 Le hero se réduit progressivement lors du défilement natif, puis la signature apparaît en grand. `profile.signature` indique l’image locale ; un filtre SVG rend le papier transparent et colore l’encre avec l’accent du site. Aucun fichier de la référence n’est réutilisé. `src/components/ScrollEffects.jsx` pilote la progression et l’entrée des sections/cartes. Les styles sont dans `src/styles/hero.css`. La préférence de réduction des mouvements désactive ces transitions et affiche la signature sans animation.

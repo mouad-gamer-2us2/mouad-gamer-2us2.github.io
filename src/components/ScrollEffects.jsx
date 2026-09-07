@@ -46,6 +46,51 @@ export function useHeroScroll(ref) {
 
 export default function ScrollEffects() {
   useEffect(() => {
+    const chapters = [...document.querySelectorAll("main > section")].filter(
+      (e) => !["accueil", "moments", "facettes"].includes(e.id),
+    );
+    const palette = [
+      [11, 17, 27],
+      [15, 27, 31],
+      [17, 25, 38],
+      [13, 29, 30],
+      [16, 23, 36],
+      [12, 29, 27],
+      [11, 17, 27],
+    ];
+    let frame = 0;
+    function update() {
+      frame = 0;
+      let color = palette[0];
+      chapters.forEach((section, i) => {
+        const progress = Math.max(
+          0,
+          Math.min(
+            1,
+            (innerHeight - section.getBoundingClientRect().top) / innerHeight,
+          ),
+        );
+        const next = palette[i % palette.length];
+        color = color.map(
+          (value, channel) => value + (next[channel] - value) * progress,
+        );
+      });
+      document.body.style.backgroundColor = `rgb(${color.join(",")})`;
+    }
+    function schedule() {
+      if (!frame) frame = requestAnimationFrame(update);
+    }
+    addEventListener("scroll", schedule, { passive: true });
+    addEventListener("resize", schedule);
+    update();
+    return () => {
+      cancelAnimationFrame(frame);
+      removeEventListener("scroll", schedule);
+      removeEventListener("resize", schedule);
+      document.body.style.removeProperty("background-color");
+    };
+  }, []);
+  useEffect(() => {
     const query = matchMedia("(prefers-reduced-motion: reduce)");
     let observer;
     const selector =

@@ -57,7 +57,7 @@ function TypedRole() {
   );
 }
 
-export default function Hero() {
+export default function Hero({ children }) {
   const [quotePaused, setQuotePaused] = useState(false);
   const scrollScene = useRef(null);
   const smallPortrait = useHeroScroll(scrollScene);
@@ -127,7 +127,7 @@ export default function Hero() {
             </div>
             <span>MOUAD JAALOUTI</span>
           </div>
-          <blockquote className="hero-quote-credit">
+          <blockquote className="hero-quote-credit" inert={!smallPortrait}>
             <p className="sr-only" lang="en">
               {quote.original}
             </p>
@@ -150,6 +150,7 @@ export default function Hero() {
           </blockquote>
         </div>
       </section>
+      {children}
       <section
         id="presentation"
         className="hero-introduction container"
