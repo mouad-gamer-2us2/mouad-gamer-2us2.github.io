@@ -1,3 +1,4 @@
+import { useT } from "../i18n/Language";
 import { useEffect, useRef, useState } from "react";
 import { ScanFace, LockKeyhole, Pause, Play } from "lucide-react";
 import { profile } from "../data/profile";
@@ -6,6 +7,8 @@ import { createPortraitRenderer } from "./portraitRenderer";
 
 /** Local organic reveal with keyboard/touch controls and a non-WebGL fallback. */
 export default function PortraitReveal({ suspended = false }) {
+  const t = useT();
+
   const canvasRef = useRef(null);
   const engine = useRef({
     x: 0.5,
@@ -75,7 +78,9 @@ export default function PortraitReveal({ suspended = false }) {
         className="portrait-stage"
         data-fallback={fallback}
         data-pinned={pinned}
-        aria-label={`Portrait interactif de ${profile.name} : figer la révélation cybersécurité`}
+        aria-label={t(
+          `Portrait interactif de ${profile.name} : figer la révélation cybersécurité`,
+        )}
         aria-pressed={pinned}
         aria-describedby="portrait-instructions"
         onPointerEnter={move}
@@ -103,7 +108,7 @@ export default function PortraitReveal({ suspended = false }) {
           src={asset(profile.photo)}
           width="1086"
           height="1448"
-          alt={`Portrait de ${profile.name}`}
+          alt={t(`Portrait de ${profile.name}`)}
           fetchPriority="high"
         />
         {fallback && (
@@ -112,7 +117,7 @@ export default function PortraitReveal({ suspended = false }) {
             src={asset(profile.photoAlternative)}
             width="1086"
             height="1448"
-            alt=""
+            alt={""}
             aria-hidden="true"
           />
         )}
@@ -122,11 +127,11 @@ export default function PortraitReveal({ suspended = false }) {
         <button
           type="button"
           className="scene-auto-toggle"
-          aria-label={
+          aria-label={t(
             paused
               ? "Activer l’animation automatique"
-              : "Mettre en pause l’animation automatique"
-          }
+              : "Mettre en pause l’animation automatique",
+          )}
           onClick={() => {
             engine.current.paused = !paused;
             engine.current.lastInput = performance.now();
@@ -140,7 +145,9 @@ export default function PortraitReveal({ suspended = false }) {
           ) : (
             <Pause size={14} aria-hidden="true" />
           )}
-          <span>{paused ? "Animation en pause" : "Animation automatique"}</span>
+          <span>
+            {t(paused ? "Animation en pause" : "Animation automatique")}
+          </span>
         </button>
       )}
       <div className="scene-interaction" id="portrait-instructions">
@@ -150,16 +157,19 @@ export default function PortraitReveal({ suspended = false }) {
           <ScanFace size={16} aria-hidden="true" />
         )}
         <span className="hover-instructions">
-          {pinned
-            ? "Révélation figée · Cliquez pour libérer"
-            : "Déplacez la souris · Cliquez pour figer"}
+          {t(
+            pinned
+              ? "Révélation figée · Cliquez pour libérer"
+              : "Déplacez la souris · Cliquez pour figer",
+          )}
         </span>
         <span className="touch-instructions">
-          Touchez pour changer de facette
+          {t("Touchez pour changer de facette")}
         </span>
         <span className="sr-only">
-          Entrée ou Espace change de version. Échap rétablit le portrait
-          original.
+          {t(
+            "Entrée ou Espace change de version. Échap rétablit le portrait original.",
+          )}
         </span>
       </div>
     </>

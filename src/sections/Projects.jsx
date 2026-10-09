@@ -1,3 +1,4 @@
+import { useT } from "../i18n/Language";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -12,6 +13,8 @@ import { SectionHeading, Tags, asset } from "../components/UI";
 import ProjectVisual from "../components/ProjectVisual";
 
 function ProjectDialog({ project, onClose }) {
+  const t = useT();
+
   const dialog = useRef(null);
   function trapFocus(event) {
     if (event.key !== "Tab") return;
@@ -54,37 +57,40 @@ function ProjectDialog({ project, onClose }) {
         <button
           autoFocus
           className="close-dialog"
-          aria-label="Fermer les détails du projet"
+          aria-label={t("Fermer les détails du projet")}
           onClick={onClose}
         >
           <X size={22} />
         </button>
         <div className="eyebrow">
-          {project.category} / {project.date}
+          {t(project.category)}
+          {" / "}
+          {t(project.date)}
         </div>
         {project.origin === "stage" && (
           <p className="project-context">
-            Stage · {project.organization}
+            {t("Stage · ")}
+            {t(project.organization)}
             {project.location && ` · ${project.location}`}
           </p>
         )}
-        <h2 id="dialog-title">{project.title}</h2>
-        {project.subtitle && <p>{project.subtitle}</p>}
+        <h2 id="dialog-title">{t(project.title)}</h2>
+        {project.subtitle && <p>{t(project.subtitle)}</p>}
         <ProjectVisual type={project.visual} />
-        <h3>Objectif</h3>
-        <p>{project.objective}</p>
-        <h3>Travail réalisé</h3>
+        <h3>{t("Objectif")}</h3>
+        <p>{t(project.objective)}</p>
+        <h3>{t("Travail réalisé")}</h3>
         <ul className="experience-bullets">
           {project.actions.map((action) => (
-            <li key={action}>{action}</li>
+            <li key={action}>{t(action)}</li>
           ))}
         </ul>
-        <h3>Technologies & méthodes</h3>
+        <h3>{t("Technologies & méthodes")}</h3>
         <Tags items={project.stack} />
         {project.result && (
           <>
-            <h3>Résultats</h3>
-            <p>{project.result}</p>
+            <h3>{t("Résultats")}</h3>
+            <p>{t(project.result)}</p>
           </>
         )}
         <div className="project-links">
@@ -103,7 +109,7 @@ function ProjectDialog({ project, onClose }) {
                 key={label}
               >
                 <Icon size={17} />
-                {label}
+                {t(label)}
               </a>
             ))}
         </div>
@@ -122,6 +128,8 @@ function matchesFilter(project, filter) {
 }
 
 export default function Projects() {
+  const t = useT();
+
   const [filter, setFilter] = useState("Tous");
   const [selected, setSelected] = useState(null);
   const trigger = useRef(null);
@@ -142,25 +150,27 @@ export default function Projects() {
       <div className="projects-heading">
         <SectionHeading
           number="05"
-          label="PROJETS"
+          label={t("PROJETS")}
           title={
             <>
-              De la théorie
+              {t("De la théorie")}
               <br />
-              <span className="muted-title">à la pratique.</span>
+              <span className="muted-title">{t("à la pratique.")}</span>
             </>
           }
-          description="Des réalisations en stage et des projets académiques et personnels, entre sécurité des infrastructures et développement applicatif."
+          description={t(
+            "Des réalisations en stage et des projets académiques et personnels, entre sécurité des infrastructures et développement applicatif.",
+          )}
         />
         <span className="project-total">
-          {String(projects.length).padStart(2, "0")}
-          <span>PROJETS</span>
+          {t(String(projects.length).padStart(2, "0"))}
+          <span>{t("PROJETS")}</span>
         </span>
       </div>
       <div
         className="project-filters"
         role="group"
-        aria-label="Filtrer les projets"
+        aria-label={t("Filtrer les projets")}
       >
         {filters.map((category) => (
           <button
@@ -168,17 +178,20 @@ export default function Projects() {
             aria-pressed={filter === category}
             onClick={() => setFilter(category)}
           >
-            {category}
+            {t(category)}
             <span>
-              {category === "Tous"
-                ? projects.length
-                : projects.filter((p) => matchesFilter(p, category)).length}
+              {t(
+                category === "Tous"
+                  ? projects.length
+                  : projects.filter((p) => matchesFilter(p, category)).length,
+              )}
             </span>
           </button>
         ))}
       </div>
       <p className="sr-only" role="status">
-        {filtered.length} projets affichés
+        {t(filtered.length)}
+        {t(" projets affichés")}
       </p>
       <div className="projects-grid">
         {filtered.map((project) => (
@@ -190,7 +203,7 @@ export default function Projects() {
               <img
                 className="project-visual"
                 src={asset(project.image)}
-                alt={`Aperçu du projet ${project.title}`}
+                alt={`${t("Aperçu du projet")} ${t(project.title)}`}
                 loading="lazy"
               />
             ) : (
@@ -198,25 +211,26 @@ export default function Projects() {
             )}
             <div className="project-body">
               <div className="project-meta">
-                <span>{project.category}</span>
-                <span>{project.date}</span>
+                <span>{t(project.category)}</span>
+                <span>{t(project.date)}</span>
               </div>
               {project.origin === "stage" && (
                 <p className="project-context">
-                  Stage · {project.organization}
+                  {t("Stage · ")}
+                  {t(project.organization)}
                 </p>
               )}
               {project.featured && (
                 <p className="feature-label">
                   <span />
-                  PROJET À LA UNE
+                  {t("PROJET À LA UNE")}
                 </p>
               )}
-              <h3>{project.title}</h3>
+              <h3>{t(project.title)}</h3>
               {project.subtitle && (
-                <p className="project-subtitle">{project.subtitle}</p>
+                <p className="project-subtitle">{t(project.subtitle)}</p>
               )}
-              <p className="project-summary">{project.summary}</p>
+              <p className="project-summary">{t(project.summary)}</p>
               <Tags items={project.stack} />
               <button
                 className="details-button"
@@ -225,7 +239,7 @@ export default function Projects() {
                   setSelected(project);
                 }}
               >
-                Explorer le projet
+                {t("Explorer le projet")}
                 <span>
                   {project.featured ? (
                     <ArrowRight size={19} />

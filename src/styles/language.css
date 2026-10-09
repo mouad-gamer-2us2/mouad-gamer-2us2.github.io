@@ -1,0 +1,182 @@
+.language-switcher {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  padding: 4px;
+  border-radius: 8px;
+}
+.language-switcher button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 6px;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 4px;
+  font: 10px var(--mono);
+  min-height: 32px;
+}
+.language-switcher button[aria-pressed="true"] {
+  background: #20392f;
+  color: var(--accent);
+}
+.language-switcher svg {
+  width: 20px;
+  height: 14px;
+  border-radius: 2px;
+}
+.header .nav-shell {
+  gap: 18px;
+}
+.header .nav {
+  gap: clamp(10px, 1.3vw, 22px);
+}
+.certificate-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 4px 0;
+  text-align: left;
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+}
+.certificate-dialog {
+  width: min(1060px, 94vw);
+  max-height: 90svh;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  color: var(--text);
+  overflow: auto;
+}
+.certificate-dialog[open] {
+  animation: certificate-enter 0.24s ease-out both;
+}
+.certificate-dialog::backdrop {
+  background: #030810d9;
+  backdrop-filter: blur(7px);
+  animation: certificate-backdrop 0.24s ease-out both;
+}
+.certificate-dialog.closing {
+  animation: certificate-exit 0.18s ease-in both;
+}
+.certificate-dialog.closing::backdrop {
+  animation: certificate-backdrop 0.18s ease-in reverse both;
+}
+.certificate-dialog header,
+.certificate-dialog footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 24px;
+}
+.certificate-dialog h2 {
+  font-size: clamp(17px, 2.5vw, 25px);
+  margin: 4px 0 0;
+}
+.certificate-dialog header button {
+  flex-shrink: 0;
+  background: var(--panel);
+  padding: 10px;
+  border-radius: 6px;
+}
+.certificate-dialog img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 65svh;
+  object-fit: contain;
+  background: #fff;
+}
+.certificate-dialog footer {
+  font-size: 12px;
+}
+.certificate-dialog footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+}
+@keyframes certificate-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes certificate-exit {
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+@keyframes certificate-backdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (min-width: 901px) and (max-width: 1250px) {
+  .header .brand-name {
+    display: none;
+  }
+  .header .nav-shell {
+    width: calc(100% - 32px);
+    gap: 12px;
+  }
+  .header .nav a {
+    font-size: 11px;
+  }
+  .language-switcher button {
+    padding: 6px 4px;
+  }
+}
+@media (max-width: 900px) {
+  .language-switcher {
+    margin-left: auto;
+    order: 1;
+  }
+  .menu-toggle {
+    order: 2;
+  }
+  .header .nav {
+    gap: 0;
+  }
+}
+@media (max-width: 420px) {
+  .header .nav-shell {
+    width: calc(100% - 24px);
+    gap: 8px;
+  }
+  .language-switcher button {
+    padding: 7px 5px;
+  }
+  .language-switcher button span {
+    display: none;
+  }
+  .language-switcher svg {
+    width: 24px;
+    height: 16px;
+  }
+  .certificate-dialog header,
+  .certificate-dialog footer {
+    padding: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .certificate-dialog[open],
+  .certificate-dialog.closing,
+  .certificate-dialog::backdrop {
+    animation: none;
+  }
+}

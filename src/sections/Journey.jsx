@@ -1,3 +1,4 @@
+import { useT } from "../i18n/Language";
 import { useEffect, useRef } from "react";
 import { ArrowDown, ArrowUpRight, Fingerprint } from "lucide-react";
 import { journey, facets } from "../data/journey";
@@ -14,7 +15,8 @@ function useScrollChapter(ref, horizontal = false) {
     let frame = 0;
     function update() {
       frame = 0;
-      const staticLayout = motion.matches || innerWidth <= 700;
+      const staticLayout =
+        motion.matches || innerWidth <= 700 || innerHeight <= 650;
       const distance = horizontal
         ? Math.max(0, track.scrollWidth - pin.clientWidth)
         : innerHeight * 0.8;
@@ -68,6 +70,8 @@ function useScrollChapter(ref, horizontal = false) {
 }
 
 export default function Journey() {
+  const t = useT();
+
   const gallery = useRef(null);
   const dual = useRef(null);
   useScrollChapter(gallery, true);
@@ -83,11 +87,12 @@ export default function Journey() {
         <div className="journey-pin">
           <header className="journey-heading">
             <div>
-              <p>AU FIL DU PARCOURS</p>
-              <h2 id="journey-title">Au-delà du code.</h2>
+              <p>{t("AU FIL DU PARCOURS")}</p>
+              <h2 id="journey-title">{t("Au-delà du code.")}</h2>
             </div>
             <span>
-              Défiler pour explorer <ArrowDown size={16} />
+              {t("Défiler pour explorer ")}
+              <ArrowDown size={16} />
             </span>
           </header>
           <div className="journey-track">
@@ -96,43 +101,44 @@ export default function Journey() {
                 className={`journey-card journey-card-${i}`}
                 key={item.title}
               >
-                <p className="journey-label">{item.label}</p>
+                <p className="journey-label">{t(item.label)}</p>
                 <div className="journey-image">
                   {item.image ? (
                     <img
                       src={asset(item.image)}
-                      alt={item.alt}
+                      alt={t(item.alt)}
                       loading="lazy"
                     />
                   ) : (
                     <div className="journey-art" aria-hidden="true">
                       <Fingerprint />
-                      <span>{item.motif}</span>
-                      <b>0{i + 1}</b>
+                      <span>{t(item.motif)}</span>
+                      <b>
+                        {"0"}
+                        {t(i + 1)}
+                      </b>
                     </div>
                   )}
                 </div>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+                <h3>{t(item.title)}</h3>
+                <p>{t(item.text)}</p>
               </article>
             ))}
             <aside className="journey-manifesto">
-              <p>UNE MÊME DIRECTION</p>
+              <p>{t("UNE MÊME DIRECTION")}</p>
               <h3>
-                Comprendre.
+                {t("Comprendre.")}
                 <br />
-                <em>Construire.</em>
+                <em>{t("Construire.")}</em>
                 <br />
-                Protéger.
+                {t("Protéger.")}
               </h3>
               <span>
-                Du code aux infrastructures, une approche qui relie
-                développement et sécurité.
+                {t(
+                  "Du code aux infrastructures, une approche qui relie développement et sécurité.",
+                )}
               </span>
             </aside>
-          </div>
-          <div className="journey-progress" aria-hidden="true">
-            <span />
           </div>
         </div>
       </section>
@@ -144,45 +150,49 @@ export default function Journey() {
       >
         <div className="facets-pin">
           <p className="facets-eyebrow" id="facets-title">
-            DEUX FACETTES · UNE MÊME RIGUEUR
+            {t("DEUX FACETTES · UNE MÊME RIGUEUR")}
           </p>
           <FacetPortrait
             side="left"
             className="facet-photo facet-cyber"
             src={facets.cyberImage}
-            label="Mouad, portrait en version cybersécurité"
+            label={t("Mouad, portrait en version cybersécurité")}
           />
           <FacetPortrait
             side="right"
             className="facet-photo facet-normal"
             src={facets.normalImage}
-            label="Portrait de Mouad Jaalouti"
+            label={t("Portrait de Mouad Jaalouti")}
           />
           <div className="facets-copy">
             <article>
-              <p>CÔTÉ SÉCURITÉ</p>
+              <p>{t("CÔTÉ SÉCURITÉ")}</p>
               <h2>
-                Analyser.
+                {t("Analyser.")}
                 <br />
-                <em>Protéger.</em>
+                <em>{t("Protéger.")}</em>
               </h2>
               <span>
-                Sécurité réseau, supervision et durcissement des systèmes.
+                {t(
+                  "Sécurité réseau, supervision et durcissement des systèmes.",
+                )}
               </span>
               <a href="#competences">
-                Mes compétences <ArrowUpRight size={18} />
+                {t("Mes compétences ")}
+                <ArrowUpRight size={18} />
               </a>
             </article>
             <article>
-              <p>CÔTÉ DÉVELOPPEMENT</p>
+              <p>{t("CÔTÉ DÉVELOPPEMENT")}</p>
               <h2>
-                Comprendre.
+                {t("Comprendre.")}
                 <br />
-                <em>Construire.</em>
+                <em>{t("Construire.")}</em>
               </h2>
-              <span>Développement web, interfaces et applications.</span>
+              <span>{t("Développement web, interfaces et applications.")}</span>
               <a href="#projets">
-                Mes réalisations <ArrowUpRight size={18} />
+                {t("Mes réalisations ")}
+                <ArrowUpRight size={18} />
               </a>
             </article>
           </div>

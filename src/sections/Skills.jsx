@@ -1,19 +1,26 @@
+import { useT } from "../i18n/Language";
 import { skills } from "../data/profile";
 import { SectionHeading, Tags, iconMap } from "../components/UI";
 export default function Skills() {
+  const t = useT();
+
   return (
     <section id="competences" className="section container">
       <SectionHeading
         number="04"
-        label="COMPÉTENCES"
+        label={t("COMPÉTENCES")}
         title={
           <>
-            Une vision d’ensemble.
+            {t("Une vision d’ensemble.")}
             <br />
-            <span className="muted-title">Des compétences concrètes.</span>
+            <span className="muted-title">
+              {t("Des compétences concrètes.")}
+            </span>
           </>
         }
-        description="Les technologies et méthodes mises en pratique au fil de mon parcours."
+        description={t(
+          "Les technologies et méthodes mises en pratique au fil de mon parcours.",
+        )}
       />
       <div className="skills-grid">
         {skills.map((skill, index) => {
@@ -24,10 +31,13 @@ export default function Skills() {
                 <span className="icon-tile">
                   <Icon size={23} aria-hidden="true" />
                 </span>
-                <span className="mono muted">0{index + 1}</span>
+                <span className="mono muted">
+                  {"0"}
+                  {t(index + 1)}
+                </span>
               </div>
-              <h3>{skill.title}</h3>
-              <p>{skill.text}</p>
+              <h3>{t(skill.title)}</h3>
+              <p>{t(skill.text)}</p>
               <Tags items={skill.items} />
             </article>
           );

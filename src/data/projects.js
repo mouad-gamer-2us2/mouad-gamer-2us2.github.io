@@ -1,4 +1,4 @@
-import { experiences } from "./profile";
+import { experiences } from "./profile.js";
 
 // Source : CV, pages 1 et 2. Aucun résultat ou lien non attesté n’est ajouté.
 const academicProjects = [

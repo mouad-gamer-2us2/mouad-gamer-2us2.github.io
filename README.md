@@ -1,6 +1,6 @@
 # Portfolio de Mouad Jaalouti
 
-Portfolio personnel en français, développé avec React, Vite, JavaScript, CSS et Lucide React. Site entièrement statique : aucun serveur applicatif, aucune base de données, aucun service payant, aucun suivi publicitaire. Les polices sont hébergées localement dans le build.
+Portfolio personnel en français, anglais et allemand, développé avec React, Vite, JavaScript, CSS et Lucide React. Site entièrement statique : aucun serveur applicatif, aucune base de données, aucun service payant, aucun suivi publicitaire. Les polices sont hébergées localement dans le build.
 
 **Adresse cible :** https://mouad-gamer-2us2.github.io/  
 **Dépôt :** https://github.com/mouad-gamer-2us2/mouad-gamer-2us2.github.io  
@@ -45,7 +45,11 @@ Pour remplacer le CV, remplacer le PDF dans `public/cv/` et conserver son nom, o
 
 Pour compléter un projet, renseigner les champs `result`, `image`, `github`, `demo`, `report`. Les liens absents (`null`) sont masqués. Les chemins des images et rapports locaux sont relatifs à `public/`, sans `/` initial, par exemple `images/uniscan.webp` ou `reports/uniscan.pdf`. Les URL externes doivent être complètes et commencer par `https://`. Ajouter une image WebP optimisée, idéalement 1200 × 675, et un résultat étayé par une source. Les notes TODO des fiches disparaissent lorsque les informations et liens attendus sont renseignés ; adapter la condition dans `Projects.jsx` si un projet n’a volontairement aucune démo ou aucun rapport.
 
-Les textes d’interface sont dans `src/sections/` et `src/components/`. Le site livré est entièrement français, avec un thème sombre unique ; les variantes FR/EN et claire, facultatives dans le brief, ne sont pas activées.
+Les textes d’interface sont dans `src/sections/` et `src/components/`. Le français sert de contenu de référence. Les traductions locales sont centralisées dans `src/i18n/translations.js` : chaque ligne suit le format `texte français|traduction anglaise|traduction allemande`. Lorsqu’un texte français change, mettre à jour sa ligne de traduction. Les tests contrôlent la couverture des biographies, descriptions, objectifs et actions des projets.
+
+Le sélecteur FR/EN/DE utilise des drapeaux SVG locaux et mémorise le choix dans `localStorage` (`portfolio-language`). Sans préférence enregistrée, le site s’ouvre en français. Le changement est immédiat, conserve les ancres et les filtres, et met à jour la langue HTML et les métadonnées. Aucun service de traduction externe n’est appelé. Les noms officiels des certificats, les technologies et les établissements sont conservés ; le CV et les justificatifs restent dans leur langue d’origine.
+
+Les trois certificats disponibles s’affichent dans une fenêtre modale sur la page, avec transition d’entrée/sortie, fermeture par Échap ou clic extérieur, focus clavier contenu dans la fenêtre et retour au bouton d’origine. Le téléchargement du document reste accessible. Les animations respectent `prefers-reduced-motion`.
 
 ### Portrait interactif
 
@@ -62,6 +66,7 @@ src/
   components/        Navigation, liens, tags, schémas des projets
   sections/          Les huit sections du portfolio
   data/              Données personnelles, projets, configuration
+  i18n/              Traductions FR/EN/DE et sélecteur de langue
   styles/            CSS responsive
   App.jsx
   main.jsx
@@ -124,7 +129,7 @@ Pour l’audit d’accessibilité, lancer `npm run dev`, ouvrir http://127.0.0.1
 
 ## Contact et confidentialité
 
-Les liens email ouvrent la messagerie de l’utilisateur. Aucun formulaire ne prétend envoyer un message, et aucune donnée n’est stockée. Le téléphone, l’email universitaire, le domaine de laboratoire BMCI et les identifiants de certification ne sont pas repris dans la page. Le CV original téléchargeable conserve son contenu intégral, conformément au fichier fourni.
+Les liens email ouvrent la messagerie de l’utilisateur. Aucun formulaire ne prétend envoyer un message. Seule la préférence de langue est enregistrée localement dans le navigateur. Le téléphone, l’email universitaire, le domaine de laboratoire BMCI et les identifiants de certification ne sont pas repris dans le texte de la page. Le CV original téléchargeable et les images des justificatifs conservent leur contenu, conformément aux fichiers fournis.
 
 ## Premier commit et push
 

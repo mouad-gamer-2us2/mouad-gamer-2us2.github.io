@@ -1,28 +1,33 @@
+import { useT } from "../i18n/Language";
 import { MapPin, GraduationCap, Target, ArrowUpRight } from "lucide-react";
 import { profile } from "../data/profile";
 import { SectionHeading } from "../components/UI";
 
 export default function About() {
+  const t = useT();
+
   return (
     <section id="a-propos" className="section container">
       <SectionHeading
         number="01"
-        label="À PROPOS"
+        label={t("À PROPOS")}
         title={
           <>
-            La technique, avec
+            {t("La technique, avec")}
             <br />
-            <span className="muted-title">une culture de la sécurité.</span>
+            <span className="muted-title">
+              {t("une culture de la sécurité.")}
+            </span>
           </>
         }
       />
       <div className="about-grid">
         <div className="about-copy">
-          <p>{profile.bio}</p>
-          <p>{profile.objective}</p>
+          <p>{t(profile.bio)}</p>
+          <p>{t(profile.objective)}</p>
           <div className="strengths">
             {profile.strengths.map((item) => (
-              <span key={item}>{item}</span>
+              <span key={item}>{t(item)}</span>
             ))}
           </div>
         </div>
@@ -30,52 +35,52 @@ export default function About() {
           <div>
             <dt>
               <MapPin size={18} />
-              Localisation
+              {t("Localisation")}
             </dt>
-            <dd>{profile.location}</dd>
+            <dd>{t(profile.location)}</dd>
           </div>
           <div>
             <dt>
               <GraduationCap size={18} />
-              Formation
+              {t("Formation")}
             </dt>
             <dd>
-              Cycle d’ingénieur · 2024–2027
-              <span>FST Guéliz · Université Cadi Ayyad</span>
+              {t("Cycle d’ingénieur · 2024–2027")}
+              <span>{t("FST Guéliz · Université Cadi Ayyad")}</span>
             </dd>
           </div>
           <div>
             <dt>
               <Target size={18} />
-              Spécialisation
+              {t("Spécialisation")}
             </dt>
-            <dd>Sécurité informatique</dd>
+            <dd>{t("Sécurité informatique")}</dd>
           </div>
         </dl>
       </div>
       <div className="languages">
-        <span className="eyebrow">LANGUES</span>
+        <span className="eyebrow">{t("LANGUES")}</span>
         {profile.languages.map(([name, level]) => (
           <div key={name}>
-            <strong>{name}</strong>
-            <span>{level}</span>
+            <strong>{t(name)}</strong>
+            <span>{t(level)}</span>
           </div>
         ))}
       </div>
       <div className="events">
         <h3>
-          Apprendre aussi sur le terrain
-          <span className="muted"> / Événements</span>
+          {t("Apprendre aussi sur le terrain")}
+          <span className="muted">{t(" / Événements")}</span>
         </h3>
         <div className="events-grid">
           {profile.events.map((event) => (
             <article key={event.title}>
               <div className="event-date">
-                {event.date}
+                {t(event.date)}
                 <ArrowUpRight size={17} aria-hidden="true" />
               </div>
-              <h4>{event.title}</h4>
-              <p>{event.text}</p>
+              <h4>{t(event.title)}</h4>
+              <p>{t(event.text)}</p>
             </article>
           ))}
         </div>

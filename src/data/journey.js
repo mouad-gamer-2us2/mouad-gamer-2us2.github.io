@@ -1,4 +1,4 @@
-import { profile } from "./profile";
+import { profile } from "./profile.js";
 
 // Add local image paths and descriptive alt text when the photographs are ready.
 export const journey = [

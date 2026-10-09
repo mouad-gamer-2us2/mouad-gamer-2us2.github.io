@@ -1,3 +1,4 @@
+import { useT } from "../i18n/Language";
 import {
   ArrowUpRight,
   Download,
@@ -24,28 +25,36 @@ export const iconMap = {
 };
 
 export function Tags({ items }) {
+  const t = useT();
+
   return (
-    <ul className="tags" aria-label="Technologies et compétences">
+    <ul className="tags" aria-label={t("Technologies et compétences")}>
       {items.map((item) => (
-        <li key={item}>{item}</li>
+        <li key={item}>{t(item)}</li>
       ))}
     </ul>
   );
 }
 
 export function SectionHeading({ number, label, title, description }) {
+  const t = useT();
+
   return (
     <div className="section-heading">
       <div className="eyebrow">
-        <span>{number}</span> / {label}
+        <span>{t(number)}</span>
+        {" / "}
+        {t(label)}
       </div>
-      <h2>{title}</h2>
-      {description && <p>{description}</p>}
+      <h2>{t(title)}</h2>
+      {description && <p>{t(description)}</p>}
     </div>
   );
 }
 
 export function CvLink({ className = "button secondary", short = false }) {
+  const t = useT();
+
   return (
     <a
       className={className}
@@ -53,29 +62,31 @@ export function CvLink({ className = "button secondary", short = false }) {
       download="Mouad-Jaalouti-CV.pdf"
     >
       <Download size={17} aria-hidden="true" />
-      {short ? "Mon CV" : "Télécharger mon CV"}
+      {t(short ? "Mon CV" : "Télécharger mon CV")}
     </a>
   );
 }
 
 export function SocialLinks({ className = "" }) {
+  const t = useT();
+
   return (
     <div className={`social-links ${className}`}>
       {profile.github && (
         <a href={profile.github} target="_blank" rel="noopener noreferrer">
           <GitFork size={18} aria-hidden="true" />
-          GitHub
+          {t("GitHub")}
           <ArrowUpRight size={14} aria-hidden="true" />
         </a>
       )}
       <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
         <BriefcaseBusiness size={18} aria-hidden="true" />
-        LinkedIn
+        {t("LinkedIn")}
         <ArrowUpRight size={14} aria-hidden="true" />
       </a>
       <a href={`mailto:${profile.email}`}>
         <Mail size={18} aria-hidden="true" />
-        Email
+        {t("Email")}
         <ArrowUpRight size={14} aria-hidden="true" />
       </a>
     </div>

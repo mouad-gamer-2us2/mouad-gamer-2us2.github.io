@@ -1,6 +1,8 @@
+import { useT } from "../i18n/Language";
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { profile } from "../data/profile";
+import { LanguageSwitcher } from "../i18n/Language";
 
 export const navigation = [
   ["accueil", "Accueil"],
@@ -14,6 +16,8 @@ export const navigation = [
 ];
 
 export default function Navigation() {
+  const t = useT();
+
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("accueil");
   useEffect(() => {
@@ -50,17 +54,18 @@ export default function Navigation() {
         <a
           className="brand"
           href="#accueil"
-          aria-label={`${profile.name}, accueil`}
+          aria-label={t(`${profile.name}, accueil`)}
           onClick={() => setOpen(false)}
         >
           <span className="monogram">
-            m<span>j</span>
-            <i>.</i>
+            {t("m")}
+            <span>{t("j")}</span>
+            <i>{"."}</i>
           </span>
           <span className="brand-name">
-            {profile.firstName.toUpperCase()}
+            {t(profile.firstName.toUpperCase())}
             <br />
-            <strong>{profile.lastName.toUpperCase()}</strong>
+            <strong>{t(profile.lastName.toUpperCase())}</strong>
           </span>
         </a>
         <button
@@ -68,7 +73,7 @@ export default function Navigation() {
           className="menu-toggle"
           aria-expanded={open}
           aria-controls="main-navigation"
-          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-label={t(open ? "Fermer le menu" : "Ouvrir le menu")}
           onClick={() => setOpen(!open)}
         >
           {open ? <X /> : <Menu />}
@@ -76,7 +81,7 @@ export default function Navigation() {
         <nav
           id="main-navigation"
           className={open ? "nav open" : "nav"}
-          aria-label="Navigation principale"
+          aria-label={t("Navigation principale")}
         >
           {navigation.map(([id, label]) => (
             <a
@@ -85,13 +90,14 @@ export default function Navigation() {
               aria-current={active === id ? "location" : undefined}
               onClick={() => setOpen(false)}
             >
-              {label}
+              {t(label)}
               {id === "contact" && (
                 <ArrowUpRight size={14} aria-hidden="true" />
               )}
             </a>
           ))}
         </nav>
+        <LanguageSwitcher />
       </div>
     </header>
   );

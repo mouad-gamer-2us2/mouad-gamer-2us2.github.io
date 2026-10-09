@@ -1,3 +1,4 @@
+import { useT } from "../i18n/Language";
 import {
   ShieldCheck,
   Server,
@@ -80,22 +81,27 @@ const visualSets = {
   },
 };
 export default function ProjectVisual({ type }) {
+  const t = useT();
+
   const visual = visualSets[type];
   return (
     <div className={`project-visual visual-${type}`} aria-hidden="true">
       <div className="visual-top">
         <span>
           <i />
-          {visual.caption}
+          {t(visual.caption)}
         </span>
-        <span>/{visual.code}</span>
+        <span>
+          {"/"}
+          {t(visual.code)}
+        </span>
       </div>
       <div className="visual-nodes">
         {visual.icons.map((Icon, i) => (
           <div className="node-wrap" key={i}>
             <div className="diagram-node">
               <Icon size={i === 1 ? 32 : 25} strokeWidth={1.4} />
-              <span>{visual.labels[i]}</span>
+              <span>{t(visual.labels[i])}</span>
             </div>
             {i < 2 && (
               <ArrowRight
@@ -108,8 +114,8 @@ export default function ProjectVisual({ type }) {
         ))}
       </div>
       <div className="visual-footer">
-        <span>ILLUSTRATION DU PROJET</span>
-        <span>＋</span>
+        <span>{t("ILLUSTRATION DU PROJET")}</span>
+        <span>{"＋"}</span>
       </div>
     </div>
   );

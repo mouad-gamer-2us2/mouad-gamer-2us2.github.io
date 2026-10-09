@@ -95,6 +95,8 @@
   height: clamp(130px, calc(100svh - 420px), 420px);
 }
 .journey-card h3 {
+  overflow-wrap: anywhere;
+  hyphens: auto;
   font-size: clamp(20px, 2vw, 30px);
   line-height: 1.1;
   margin: 16px 0 10px;
@@ -156,21 +158,6 @@
   display: block;
   max-width: 340px;
   color: #c2d1cc;
-}
-.journey-progress {
-  position: absolute;
-  bottom: 18px;
-  left: 5%;
-  width: 90%;
-  height: 2px;
-  background: #7be0bd22;
-}
-.journey-progress span {
-  display: block;
-  height: 100%;
-  background: var(--accent);
-  transform-origin: left;
-  transform: scaleX(var(--chapter-progress));
 }
 .facets-pin {
   background-color: color-mix(
@@ -385,7 +372,50 @@
     height: calc(86svh - 73px);
   }
 }
-@media (max-width: 700px), (prefers-reduced-motion: reduce) {
+/* The gallery reserves separate rows for its heading, cards and bottom breathing room. */
+@media (min-width: 701px) and (min-height: 651px) and (prefers-reduced-motion: no-preference) {
+  .journey-pin {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    padding-bottom: 28px;
+  }
+  .journey-heading {
+    padding-top: 20px;
+  }
+  .journey-track {
+    height: 100%;
+    min-height: 0;
+    padding-block: 8px;
+    align-items: stretch;
+  }
+  .journey-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+  .journey-card .journey-image,
+  .journey-card:has(.journey-image img) .journey-image {
+    flex: 1 1 auto;
+    min-height: 80px;
+    height: 0;
+    max-height: 420px;
+  }
+  .journey-card h3,
+  .journey-card > p {
+    flex: none;
+  }
+  .journey-card > p:last-child {
+    margin-bottom: 0;
+  }
+  .journey-manifesto {
+    align-self: center;
+  }
+}
+@media (max-width: 700px),
+  (max-height: 650px),
+  (prefers-reduced-motion: reduce) {
   .journey-pin,
   .facets-pin {
     position: relative;
@@ -414,8 +444,7 @@
   .journey-card:nth-child(even) .journey-image {
     height: 280px;
   }
-  .journey-heading > span,
-  .journey-progress {
+  .journey-heading > span {
     display: none;
   }
   .facets-eyebrow {

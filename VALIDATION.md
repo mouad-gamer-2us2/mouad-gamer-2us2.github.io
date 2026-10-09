@@ -1,5 +1,19 @@
 # Validation du portfolio
 
+## Mise à jour du 9 octobre 2026 — FR/EN/DE et certificats
+
+- Six tests unitaires réussis : déploiement, couverture des traductions du contenu et conservation des noms/liens/accents.
+- Compilation de production et test HTTP des ressources, métadonnées et CV exact réussis.
+- FR/EN/DE contrôlés dans Chromium : navigation, biographies, galerie, projets et détails ; préférence conservée après rechargement ; filtre de stages conservé lors du changement de langue.
+- Sélecteur à drapeaux contrôlé sur ordinateur, à 1024 px, sur tablette à 768 px et sur mobiles à 390 et 320 px. Pas de débordement horizontal dans ces essais. Les titres allemands longs de la galerie se coupent correctement.
+- Ligne de progression supprimée de la galerie ; descriptions entièrement dans la scène épinglée, avec marge inférieure, au défilement dans les deux sens. Les fenêtres de faible hauteur utilisent la disposition verticale.
+- Trois certificats ouverts dans la page : image chargée, bouton de fermeture, Échap, boucle Tab/Shift+Tab et retour du focus vérifiés. Aperçu du certificat TryHackMe contrôlé à 390 px.
+- Axe-core : aucune violation automatique sur la page (43 règles réussies) ni sur le dialogue (22 règles réussies). Les contrastes sur les fonds complexes restent à revue visuelle (136 éléments sur la page, 2 dans le dialogue) ; cela ne constitue pas une certification d’accessibilité exhaustive.
+- Les textes conservent leur opacité complète pendant les animations d’entrée pour éviter un contraste insuffisant avant révélation. Les déplacements restent animés.
+- Aucune erreur ni alerte console relevée pendant les essais de production. Le CV et les justificatifs gardent leur langue originale.
+
+Les notes ci-dessous décrivent les versions précédentes et leurs limites au moment de leurs essais.
+
 Vérifications effectuées le 6 septembre 2026 sur Windows, Node.js 24.19.0 et Chromium via le navigateur intégré. La CI cible Node.js 22. Le site n’a pas été poussé ni publié.
 
 ## Compilation et fichiers

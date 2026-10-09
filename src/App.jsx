@@ -1,3 +1,4 @@
+import { useT } from "./i18n/Language";
 import ScrollEffects from "./components/ScrollEffects";
 import Navigation from "./components/Navigation";
 import Hero from "./sections/Hero";
@@ -11,10 +12,12 @@ import Contact from "./sections/Contact";
 import { education, experiences } from "./data/profile";
 
 export default function App() {
+  const t = useT();
+
   return (
     <>
       <a className="skip-link" href="#main">
-        Aller au contenu
+        {t("Aller au contenu")}
       </a>
       <Navigation />
       <main id="main" tabIndex={-1}>
@@ -25,21 +28,23 @@ export default function App() {
         <Timeline
           id="parcours"
           number="02"
-          label="PARCOURS"
-          title="Un parcours qui se construit."
-          description="Des fondamentaux scientifiques à la spécialisation en sécurité informatique."
+          label={t("PARCOURS")}
+          title={t("Un parcours qui se construit.")}
+          description={t(
+            "Des fondamentaux scientifiques à la spécialisation en sécurité informatique.",
+          )}
           items={education}
         />
         <Timeline
           id="experiences"
           number="03"
-          label="EXPÉRIENCES"
+          label={t("EXPÉRIENCES")}
           title={
             <>
-              La pratique,
+              {t("La pratique,")}
               <br />
               <span className="muted-title">
-                en environnement professionnel.
+                {t("en environnement professionnel.")}
               </span>
             </>
           }

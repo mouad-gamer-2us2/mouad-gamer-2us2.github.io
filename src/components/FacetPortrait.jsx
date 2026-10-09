@@ -1,5 +1,8 @@
+import { useT } from "../i18n/Language";
 import { asset } from "./UI";
 export default function FacetPortrait({ src, className, label, side }) {
+  const t = useT();
+
   return (
     <div
       className={`${className} facet-effect-${side}`}
@@ -7,7 +10,7 @@ export default function FacetPortrait({ src, className, label, side }) {
     >
       <img
         src={asset(src)}
-        alt={label}
+        alt={t(label)}
         width="1122"
         height="1402"
         loading="lazy"

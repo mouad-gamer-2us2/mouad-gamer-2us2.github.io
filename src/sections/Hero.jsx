@@ -1,3 +1,4 @@
+import { useT } from "../i18n/Language";
 import { useEffect, useState, useRef } from "react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import { profile, experiences } from "../data/profile";
@@ -9,27 +10,30 @@ import { quote } from "../data/quote";
 import { useHeroScroll } from "../components/ScrollEffects";
 
 function TypedRole() {
-  const [text, setText] = useState(profile.roles[0]);
+  const t = useT();
+
+  const [text, setText] = useState(t(profile.roles[0]));
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const roles = profile.roles.map(t);
     let timer;
     function start() {
       clearTimeout(timer);
       if (query.matches) {
-        setText(profile.roles[0]);
+        setText(roles[0]);
         return;
       }
       let role = 0,
-        count = profile.roles[0].length,
+        count = roles[0].length,
         deleting = true;
       const tick = () => {
-        const word = profile.roles[role];
+        const word = roles[role];
         count += deleting ? -1 : 1;
         setText(word.slice(0, count));
         let delay = deleting ? 24 : 55;
         if (count === 0) {
           deleting = false;
-          role = (role + 1) % profile.roles.length;
+          role = (role + 1) % roles.length;
           delay = 220;
         } else if (count === word.length && !deleting) {
           deleting = true;
@@ -37,6 +41,7 @@ function TypedRole() {
         }
         timer = setTimeout(tick, delay);
       };
+      setText(roles[0]);
       timer = setTimeout(tick, 3600);
     }
     start();
@@ -45,19 +50,21 @@ function TypedRole() {
       clearTimeout(timer);
       query.removeEventListener("change", start);
     };
-  }, []);
+  }, [t]);
   return (
     <div className="role-line">
-      <span className="sr-only">{profile.title}</span>
+      <span className="sr-only">{t(profile.title)}</span>
       <span aria-hidden="true">
-        <span className="prompt">›</span> {text}
-        <span className="cursor">_</span>
+        <span className="prompt">{"›"}</span> {t(text)}
+        <span className="cursor">{"_"}</span>
       </span>
     </div>
   );
 }
 
 export default function Hero({ children }) {
+  const t = useT();
+
   const [quotePaused, setQuotePaused] = useState(false);
   const scrollScene = useRef(null);
   const smallPortrait = useHeroScroll(scrollScene);
@@ -71,7 +78,7 @@ export default function Hero({ children }) {
       >
         <div className="hero-pin">
           <div className="hero-message" aria-hidden="true">
-            UNE CONVICTION / MOUAD JAALOUTI
+            {t("UNE CONVICTION / MOUAD JAALOUTI")}
           </div>
           <div
             className="quote-marquee"
@@ -81,7 +88,10 @@ export default function Hero({ children }) {
             {quote.lines.map((line, index) => (
               <div className={`quote-track quote-track-${index}`} key={line}>
                 {Array.from({ length: 4 }, (_, repeat) => (
-                  <span key={repeat}>{line}&nbsp;</span>
+                  <span key={repeat}>
+                    {t(line)}
+                    {"\u00a0"}
+                  </span>
                 ))}
               </div>
             ))}
@@ -89,18 +99,19 @@ export default function Hero({ children }) {
           <div className="hero-scene">
             <PortraitReveal suspended={smallPortrait} />
             <span className="scene-index" aria-hidden="true">
-              MJ / PORTFOLIO PERSONNEL
+              {t("MJ / PORTFOLIO PERSONNEL")}
             </span>
             <div className="scene-name">
-              <p>CODE · SYSTÈMES · CYBERSÉCURITÉ</p>
+              <p>{t("CODE · SYSTÈMES · CYBERSÉCURITÉ")}</p>
               <h1 id="hero-title">
-                {profile.firstName}
-                <span>{profile.lastName}</span>
+                {t(profile.firstName)}
+                <span>{t(profile.lastName)}</span>
               </h1>
-              <small>{profile.title}</small>
+              <small>{t(profile.title)}</small>
             </div>
             <a className="scene-scroll" href="#presentation">
-              Explorer mon portfolio <ArrowDown size={20} aria-hidden="true" />
+              {t("Explorer mon portfolio ")}
+              <ArrowDown size={20} aria-hidden="true" />
             </a>
           </div>
           <div className="hero-signature" aria-hidden="true">
@@ -125,27 +136,31 @@ export default function Hero({ children }) {
                 />
               </svg>
             </div>
-            <span>MOUAD JAALOUTI</span>
+            <span>{t("MOUAD JAALOUTI")}</span>
           </div>
           <blockquote className="hero-quote-credit" inert={!smallPortrait}>
             <p className="sr-only" lang="en">
-              {quote.original}
+              {t(quote.original)}
             </p>
             <cite>
               <a href={quote.source} target="_blank" rel="noopener noreferrer">
-                {quote.author} · <span lang="en">The Process of Security</span>
+                {t(quote.author)}
+                {" · "}
+                <span lang="en">{t("The Process of Security")}</span>
               </a>
             </cite>
-            <small>Traduction française</small>
+            <small>{t("Traduction française")}</small>
             <button
               className="quote-pause"
               type="button"
               aria-pressed={quotePaused}
               onClick={() => setQuotePaused(!quotePaused)}
             >
-              {quotePaused
-                ? "Animer la citation"
-                : "Mettre la citation en pause"}
+              {t(
+                quotePaused
+                  ? "Animer la citation"
+                  : "Mettre la citation en pause",
+              )}
             </button>
           </blockquote>
         </div>
@@ -161,21 +176,21 @@ export default function Hero({ children }) {
             {profile.status && (
               <div className="status">
                 <span className="status-dot" />
-                {profile.status}
+                {t(profile.status)}
               </div>
             )}
             <h2 id="intro-title" className="intro-heading">
-              Construire avec rigueur.
+              {t("Construire avec rigueur.")}
               <br />
-              <span>Sécuriser avec méthode.</span>
+              <span>{t("Sécuriser avec méthode.")}</span>
             </h2>
             <TypedRole />
           </div>
           <div>
-            <p className="hero-description">{profile.intro}</p>
+            <p className="hero-description">{t(profile.intro)}</p>
             <div className="hero-actions">
               <a className="button primary" href="#projets">
-                Voir mes projets
+                {t("Voir mes projets")}
                 <ArrowRight size={18} aria-hidden="true" />
               </a>
               <CvLink />
@@ -186,32 +201,32 @@ export default function Hero({ children }) {
         <div className="hero-bottom">
           <div className="hero-facts">
             <div>
-              <strong>{String(projects.length).padStart(2, "0")}</strong>
+              <strong>{t(String(projects.length).padStart(2, "0"))}</strong>
               <span>
-                projets en stage
+                {t("projets en stage")}
                 <br />
-                et hors stage
+                {t("et hors stage")}
               </span>
             </div>
             <div>
-              <strong>{String(experiences.length).padStart(2, "0")}</strong>
+              <strong>{t(String(experiences.length).padStart(2, "0"))}</strong>
               <span>
-                expériences
+                {t("expériences")}
                 <br />
-                en entreprise
+                {t("en entreprise")}
               </span>
             </div>
             <div>
-              <strong>{profile.expectedGraduation}</strong>
+              <strong>{t(profile.expectedGraduation)}</strong>
               <span>
-                fin du cycle ingénieur
+                {t("fin du cycle ingénieur")}
                 <br />
-                prévue
+                {t("prévue")}
               </span>
             </div>
           </div>
           <a className="discover" href="#a-propos">
-            Découvrir mon parcours
+            {t("Découvrir mon parcours")}
             <ArrowDown size={17} aria-hidden="true" />
           </a>
         </div>

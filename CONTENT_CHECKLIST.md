@@ -46,7 +46,7 @@
 
 Le projet de sécurisation réseau est mis en avant pour sa pertinence avec la spécialisation. Les schémas SVG/CSS sont clairement étiquetés comme **illustrations** et ne représentent pas des captures ou des preuves de déploiement. Les catégories sont des regroupements éditoriaux des compétences du CV. Aucun niveau de maîtrise n’a été ajouté.
 
-Les descriptions abrégées renvoient aux fiches détaillées. Le site n’ajoute pas de compétences en finance, gestion ou audit : elles ne figurent pas dans le CV. La version livrée est en français et en thème sombre ; les options FR/EN et thème clair restent facultatives.
+Les descriptions abrégées renvoient aux fiches détaillées. Le site n’ajoute pas de compétences en finance, gestion ou audit : elles ne figurent pas dans le CV. Le contenu de référence est français, avec traductions anglaise et allemande dans `src/i18n/translations.js`. Le CV et les justificatifs conservent leur langue originale. Mettre à jour les deux traductions à chaque modification du contenu français.
 
 ## Avant publication
 
